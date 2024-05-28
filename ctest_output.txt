@@ -1,0 +1,130 @@
+[HANDLER_OUTPUT] 
+Test project C:/Users/bya67386/work/mantid/build
+
+    Start 1067: DataObjectsTest_RebinnedOutputTest
+1/9 Test #1067: DataObjectsTest_RebinnedOutputTest .........................................***Failed    2.58 sec
+Exit code 0xc0000139
+
+
+    Start 1067: DataObjectsTest_RebinnedOutputTest
+    Test #1067: DataObjectsTest_RebinnedOutputTest .........................................***Failed    0.20 sec
+Exit code 0xc0000139
+
+
+    Start 1067: DataObjectsTest_RebinnedOutputTest
+    Test #1067: DataObjectsTest_RebinnedOutputTest .........................................***Failed    0.20 sec
+Exit code 0xc0000139
+
+
+    Start 1464: python.plots.testingOutputTest.testingOutputTest
+2/9 Test #1464: python.plots.testingOutputTest.testingOutputTest ...........................***Failed    0.29 sec
+F
+======================================================================
+FAIL: test_that_flakes (testingOutputTest.OutputTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:/Users/bya67386/work/mantid/Framework/PythonInterface/test/python/mantid/plots/testingOutputTest.py", line 16, in test_that_flakes
+    assert(os.path.exists(self.filename))
+AssertionError
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)
+
+    Start 1464: python.plots.testingOutputTest.testingOutputTest
+    Test #1464: python.plots.testingOutputTest.testingOutputTest ...........................   Passed    0.28 sec
+    Start 1550: python.algorithms.LoadGudrunOutputTest.LoadGudrunOutputTest
+3/9 Test #1550: python.algorithms.LoadGudrunOutputTest.LoadGudrunOutputTest ................   Passed   15.78 sec
+    Start 2478: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputTest
+4/9 Test #2478: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputTest ...................***Failed    2.31 sec
+Exit code 0xc0000139
+
+
+    Start 2478: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputTest
+    Test #2478: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputTest ...................***Failed    0.28 sec
+Exit code 0xc0000139
+
+
+    Start 2478: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputTest
+    Test #2478: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputTest ...................***Failed    0.28 sec
+Exit code 0xc0000139
+
+
+    Start 2479: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsModelTest
+5/9 Test #2479: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsModelTest .......***Failed    0.30 sec
+Exit code 0xc0000139
+
+
+    Start 2479: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsModelTest
+    Test #2479: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsModelTest .......***Failed    0.28 sec
+Exit code 0xc0000139
+
+
+    Start 2479: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsModelTest
+    Test #2479: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsModelTest .......***Failed    0.27 sec
+Exit code 0xc0000139
+
+
+    Start 2480: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsPresenterTest
+6/9 Test #2480: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsPresenterTest ...***Failed    0.27 sec
+Exit code 0xc0000139
+
+
+    Start 2480: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsPresenterTest
+    Test #2480: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsPresenterTest ...***Failed    0.29 sec
+Exit code 0xc0000139
+
+
+    Start 2480: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsPresenterTest
+    Test #2480: MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsPresenterTest ...***Failed    0.30 sec
+Exit code 0xc0000139
+
+
+    Start 2487: MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsModelTest
+7/9 Test #2487: MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsModelTest ..............***Failed    0.29 sec
+Exit code 0xc0000139
+
+
+    Start 2487: MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsModelTest
+    Test #2487: MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsModelTest ..............***Failed    0.27 sec
+Exit code 0xc0000139
+
+
+    Start 2487: MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsModelTest
+    Test #2487: MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsModelTest ..............***Failed    0.32 sec
+Exit code 0xc0000139
+
+
+    Start 2488: MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsPresenterTest
+8/9 Test #2488: MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsPresenterTest ..........***Failed    0.29 sec
+Exit code 0xc0000139
+
+
+    Start 2488: MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsPresenterTest
+    Test #2488: MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsPresenterTest ..........***Failed    0.28 sec
+Exit code 0xc0000139
+
+
+    Start 2488: MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsPresenterTest
+    Test #2488: MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsPresenterTest ..........***Failed    0.27 sec
+Exit code 0xc0000139
+
+
+    Start 2687: python.IsisPowder.ISISPowderGemOutputTest.ISISPowderGemOutputTest
+9/9 Test #2687: python.IsisPowder.ISISPowderGemOutputTest.ISISPowderGemOutputTest ..........   Passed    4.55 sec
+
+33% tests passed, 6 tests failed out of 9
+
+Total Test time (real) =  32.26 sec
+
+The following tests FAILED:
+	1067 - DataObjectsTest_RebinnedOutputTest (Failed)
+	2478 - MantidQtInterfacesInelasticTestQt5_IndirectFitOutputTest (Failed)
+	2479 - MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsModelTest (Failed)
+	2480 - MantidQtInterfacesInelasticTestQt5_IndirectFitOutputOptionsPresenterTest (Failed)
+	2487 - MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsModelTest (Failed)
+	2488 - MantidQtInterfacesInelasticTestQt5_OutputPlotOptionsPresenterTest (Failed)
+[ERROR_MESSAGE] 
+Errors while running CTest
+

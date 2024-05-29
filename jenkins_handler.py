@@ -1,5 +1,4 @@
 import jenkins
-from datetime import datetime
 from typing import List, Tuple
 
 

@@ -1,4 +1,6 @@
 import argparse
+from datetime import datetime
+import logging
 from typing import List, Dict, Tuple
 import urllib.request
 import urllib.error
@@ -12,6 +14,7 @@ from ctest_log_parser import CtestOutputParser
 os_names_to_log_names = {'Windows': 'ctest_msys.log',
                          'Linux': 'ctest_linux-gnu.log',
                          'MacOS': 'ctest_dawin22.log'}
+logger = logging.getLogger()
 
 
 def main():
@@ -19,6 +22,7 @@ def main():
     db_handler = DatabaseHandler("testResults.db")
 
     for job in args.jobs:
+        logger.info(f"Searching for new builds in {job}")
         for build_number, finish_time in job_builds_to_be_parsed(job, args.jenkins_server, db_handler):
             logs = retrieve_log_files(job, build_number)
             for os, log_file in logs:
@@ -38,7 +42,11 @@ def job_builds_to_be_parsed(job_name: str, jenkins_url: str, db_handler: Databas
     :return: List of tuples of runs and finish times that have taken place since the last data ingest
     """
     jenkins_handler = JenkinsHandler(jenkins_url)
-    _, finish_time = db_handler.get_latest_build(job_name)
+    build_number, finish_time = db_handler.get_latest_build(job_name)
+    if finish_time is None:
+        logger.info("No previous builds found in the database")
+        return jenkins_handler.get_all_builds_after_timestamp(job_name, 0)
+    logger.info(f"Found most recent build {build_number} at {datetime.fromtimestamp(int(finish_time))}")
     return jenkins_handler.get_all_builds_after_timestamp(job_name, int(finish_time))
 
 
@@ -48,6 +56,7 @@ def retrieve_log_files(job_name: str, build_number: str) -> Dict[str, str]:
     :param build_number: str build number
     :return: Dictionary of str os names to their respective downloaded log files
     """
+    logger.info(f"Retrieving log files for {job_name} build {build_number}")
     local_log_files = {}
     # this url works for pipeline jobs, pr jobs don't have a 'source' directory
     base_url = f"https://builds.mantidproject.org/job/{job_name}/{build_number}/artifact/source/build/test_logs/"
@@ -55,14 +64,16 @@ def retrieve_log_files(job_name: str, build_number: str) -> Dict[str, str]:
         log_file_url = base_url + log_file_name
         local_log_file_path = f"./log_files/{job_name}_{build_number}_{log_file_name}"
         try:
+            logger.info(f"Searching for {log_file_url}")
             urllib.request.urlretrieve(log_file_url, local_log_file_path)
         except urllib.error.HTTPError as e:
             if str(e) == "HTTP Error 404: Not Found":
-                print(f"{os_name} log not found for {job_name} build number {build_number}")
+                logger.info(f"{os_name} log not found for {job_name} build number {build_number}")
                 continue
             else:
                 raise e
 
+        logger.info(f"Found log file for {os_name}: {local_log_file_path}")
         local_log_files[os_name] = local_log_file_path
 
     return local_log_files

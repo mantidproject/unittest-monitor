@@ -1,7 +1,10 @@
+import logging
 import re
 from typing import Dict
 
 from ctest_result import TestRun, TestResult
+
+logger = logging.getLogger()
 
 
 class CtestOutputParser:
@@ -12,6 +15,7 @@ class CtestOutputParser:
         self.result_regex = re.compile(r"(.*)Test *\#\d+: ([a-zA-Z0-9_\.]+) [\.\*]+( {3}Passed|Failed) +(\d+\.\d+) sec")
 
     def parse(self) -> Dict[str, TestResult]:
+        logger.info(f"Parsing {self.log_path}")
         with open(self.log_path, "r") as log_reader:
             results_line_matches = [self.result_regex.match(line) for line in log_reader.readlines() if self.result_regex.match(line)]
 
@@ -24,6 +28,7 @@ class CtestOutputParser:
             else:
                 self.test_results[name].add_run(run)
 
+        logging.info(f"Found {len(self.test_results)} test results")
         return self.test_results
 
     def get_failures(self) -> Dict[str, TestResult]:

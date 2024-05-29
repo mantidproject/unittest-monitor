@@ -1,7 +1,10 @@
+import logging
 import sqlite3
 from typing import Tuple
 
 from run_result import RunResult
+
+logger = logging.getLogger()
 
 
 class DatabaseHandler:
@@ -9,7 +12,7 @@ class DatabaseHandler:
     def __init__(self, address: str):
         self.connection = sqlite3.Connection(address)
 
-    def get_latest_build(self, job_name: str) -> Tuple[str, str]:
+    def get_latest_build(self, job_name: str) -> Tuple[str | None, str | None]:
         """
         Returns the most recent build number and its finish time stored in the database
         for the given job name
@@ -21,7 +24,10 @@ class DatabaseHandler:
         """
         cur = self.connection.cursor()
         result = cur.execute(query)
-        return result.fetchone()
+        row = result.fetchone()
+        if row is None:
+            return None, None
+        return row
 
     def ingest_results(self, run_result: RunResult):
         self._add_run(run_result)

@@ -1,4 +1,5 @@
 import argparse
+import os
 from datetime import datetime
 import logging
 from typing import List, Dict, Tuple
@@ -25,7 +26,7 @@ def main():
         logger.info(f"Searching for new builds in {job}")
         for build_number, finish_time in job_builds_to_be_parsed(job, args.jenkins_server, db_handler):
             logs = retrieve_log_files(job, build_number)
-            for os, log_file in logs:
+            for os, log_file in logs.items():
                 parser = CtestOutputParser(log_file)
                 results = parser.parse()
                 run_result = RunResult(job, build_number, finish_time, os, results)
@@ -65,6 +66,7 @@ def retrieve_log_files(job_name: str, build_number: str) -> Dict[str, str]:
         local_log_file_path = f"./log_files/{job_name}_{build_number}_{log_file_name}"
         try:
             logger.info(f"Searching for {log_file_url}")
+            os.mknod(local_log_file_path)
             urllib.request.urlretrieve(log_file_url, local_log_file_path)
         except urllib.error.HTTPError as e:
             if str(e) == "HTTP Error 404: Not Found":

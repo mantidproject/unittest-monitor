@@ -1,0 +1,36 @@
+name: Ingest Test Results
+
+on:
+  schedule:
+    # Daily build at 14:00
+    - cron: "0 14 * * * "
+  # Manual run
+  workflow_dispatch:
+
+jobs:
+  ingest_data:
+    name: Ingest Data
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+          architecture: x64
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Ingest
+        run: ./dataIngest.sh
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: main
+          push_options: '--force'
+          commit_options: '--no-verify --signoff'
+          commit_message: Update database
+          create_branch: true
+          file_pattern: 'testResults.db'
+        

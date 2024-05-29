@@ -15,7 +15,7 @@ class JenkinsHandler:
         for build in self.server.get_job_info(job_name)['builds']:
             build_info = self.server.get_build_info(job_name,  build['number'])
             if not build_info['inProgress'] and build_info['timestamp'] > time_stamp and build_info['result'] != 'ABORTED':
-                build.append(build['number'], str(build_info['timestamp']))
+                builds.append((build['number'], str(build_info['timestamp'])))
         builds_output = '\n'.join([f'{number} at {finish}' for number, finish in builds])
         logger.info(f"Found {len(builds)} more builds to ingest\n{builds_output}")
         return builds

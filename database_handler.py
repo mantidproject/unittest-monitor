@@ -30,20 +30,20 @@ class DatabaseHandler:
         return row
 
     def ingest_results(self, run_result: RunResult):
-        self._add_run(run_result)
+        job_id = self._get_job_id(run_result.job_name)
+        self._add_run(run_result, job_id)
         cur = self.connection.cursor()
         for test_name, test_result in run_result.test_results.items():
             result_text = test_result.get_result_text()
             query = f"""
-            INSERT INTO TEST_RESULT (name, build_number, os, result)
-            VALUES ('{test_name}', '{run_result.build_number}', '{run_result.os}', '{result_text}')
+            INSERT INTO TEST_RESULT (name, job_id, build_number, os, result)
+            VALUES ('{test_name}', {job_id}, '{run_result.build_number}', '{run_result.os}', '{result_text}')
             """
             cur.execute(query)
 
         self.connection.commit()
 
-    def _add_run(self, run_result: RunResult):
-        job_id = self._get_job_id(run_result.job_name)
+    def _add_run(self, run_result: RunResult, job_id: int):
         query = f"""
         INSERT INTO RUN (job_id, build_number, os, finish_time)
         VALUES ({job_id}, '{run_result.build_number}', '{run_result.os}', '{run_result.finish_time}')

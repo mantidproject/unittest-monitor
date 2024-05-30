@@ -17,18 +17,19 @@ CREATE TABLE RUN (
     build_number INTEGER NOT NULL,
     os CHAR(32) NOT NULL,
     finish_time INTEGER NOT NULL,
-    PRIMARY KEY(build_number, os),
+    PRIMARY KEY(job_id, build_number, os),
     FOREIGN KEY(job_id) REFERENCES JOB(job_id)
 );
 """
 TEST_RESULT_TABLE_CREATE_COMMAND = """
 CREATE TABLE TEST_RESULT (
     name CHAR(128) NOT NULL,
+    job_id INTEGER NOT NULL,
     build_number INTEGER NOT NULL,
     os CHAR(32) NOT NULL,
     result CHAR(32) NOT NULL,
-    FOREIGN KEY(build_number, os) REFERENCES RUN(build_number, os),
-    PRIMARY KEY(name, build_number, os)
+    FOREIGN KEY(job_id, build_number, os) REFERENCES RUN(job_id, build_number, os),
+    PRIMARY KEY(name, job_id, build_number, os)
 );
 """
 INSERT_JOB_COMMAND = Template("""

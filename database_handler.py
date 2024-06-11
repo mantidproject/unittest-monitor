@@ -20,7 +20,7 @@ class DatabaseHandler:
         query = f"""
         SELECT build_number, finish_time FROM RUN 
         INNER JOIN JOB ON RUN.job_id = JOB.job_id WHERE JOB.job_name = '{job_name}' 
-        ORDER BY datetime(finish_time) DESC Limit 1
+        ORDER BY finish_time DESC Limit 1
         """
         cur = self.connection.cursor()
         result = cur.execute(query)

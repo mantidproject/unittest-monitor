@@ -49,7 +49,8 @@ def job_builds_to_be_parsed(job_name: str, jenkins_url: str, db_handler: Databas
     if finish_time is None:
         logger.info("No previous builds found in the database")
         return jenkins_handler.get_all_builds_after_timestamp(job_name, 0)
-    logger.info(f"Found most recent build {build_number} at {datetime.fromtimestamp(int(finish_time))}")
+    # jeknins gives the unix epoch in milliseconds, so divide by 1000
+    logger.info(f"Found most recent build {build_number} at {datetime.fromtimestamp(int(finish_time) / 1000)}")
     return jenkins_handler.get_all_builds_after_timestamp(job_name, int(finish_time))
 
 

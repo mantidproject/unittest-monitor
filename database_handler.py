@@ -32,6 +32,7 @@ class DatabaseHandler:
     def ingest_results(self, run_result: RunResult):
         job_id = self._get_job_id(run_result.job_name)
         self._add_run(run_result, job_id)
+        logger.info(f"Ingesting results for {run_result.job_name} #{run_result.build_number} ({run_result.os}")
         cur = self.connection.cursor()
         for test_name, test_result in run_result.test_results.items():
             result_text = test_result.get_result_text()

@@ -28,7 +28,7 @@ class CtestOutputParser:
                 # first run
                 self.test_results[name] = TestResult(run)
 
-        logging.info(f"Found {len(self.test_results)} test results")
+        logger.info(f"Found {len(self.test_results)} test results")
         return self.test_results
 
     def get_failures(self) -> Dict[str, TestResult]:

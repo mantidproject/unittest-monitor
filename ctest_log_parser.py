@@ -4,7 +4,7 @@ from typing import Dict
 
 from ctest_result import TestRun, TestResult
 
-logger = logging.getLogger()
+logger = logging.getLogger("CtestOutputParser")
 
 
 class CtestOutputParser:

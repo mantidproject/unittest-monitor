@@ -1,6 +1,8 @@
 import sqlite3
 import argparse
+import logging
 import os
+import sys
 from typing import List
 from string import Template
 
@@ -37,12 +39,15 @@ INSERT INTO JOB (job_name)
 VALUES ('$job_name');
 """)
 
+logger = logging.getLogger("create database")
+logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+
 
 def main():
     args = parse_args()
     db_name = args.db_name
     if os.path.exists(db_name):
-        print(f"Database {db_name} already exists, exiting database creation script")
+        logger.info(f"Database {db_name} already exists, exiting database creation script")
         return 0
     init_database(db_name, args.jobs)
 

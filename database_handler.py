@@ -4,7 +4,7 @@ from typing import Tuple
 
 from run_result import RunResult
 
-logger = logging.getLogger()
+logger = logging.getLogger("DatabaseHandler")
 
 
 class DatabaseHandler:

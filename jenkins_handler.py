@@ -2,7 +2,7 @@ import jenkins
 import logging
 from typing import List, Tuple
 
-logger = logging.getLogger()
+logger = logging.getLogger("JenkinsHandler")
 
 
 class JenkinsHandler:

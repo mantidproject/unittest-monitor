@@ -63,8 +63,9 @@ class DatabaseHandler:
 
     def get_all_test_results(self):
         query = f"""
-        SELECT JOB.job_name, build_number, name, os, result FROM TEST_RESULT
-        INNER JOIN JOB ON TEST_RESULT.job_id = JOB.job_id
+        SELECT JOB.job_name, TEST_RESULT.build_number, name, TEST_RESULT.os, result, RUN.finish_time FROM TEST_RESULT
+        INNER JOIN RUN ON TEST_RESULT.job_id = RUN.job_id
+        INNER JOIN JOB ON RUN.job_id = JOB.job_id
         WHERE JOB.job_name IN (SELECT job_name FROM JOB)
         """
         cur = self.connection.cursor()

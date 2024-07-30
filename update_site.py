@@ -6,6 +6,8 @@ from typing import Dict, List
 from datetime import datetime
 import logging
 import sys
+from pathlib import Path
+import shutil
 
 from database_handler import DatabaseHandler
 logger = logging.getLogger("update site")
@@ -46,16 +48,22 @@ def format_templates(test_results: Dict[str, List[ResultInfo]]):
     environment = Environment(loader=FileSystemLoader('web/templates/'))
     table_template = environment.get_template('os_table.html.j2')
     os_table_html_locations = {}
+    html_path = Path('html')
+    html_path.mkdir(exist_ok=True)
+    html_source_path = html_path / 'src'
+    html_source_path.mkdir(exist_ok=True)
+    shutil.copyfile("web/src/bootstrap.min.css", "html/src/bootstrap.min.css")
+
     for os in ['Linux', 'Windows', 'MacOS']:
         context_data = create_context_data(test_results, os)
         context = {"os_name": os, **context_data}
-        with open(f"web/html/{os}_table.html", "w") as fp:
+        with open(f"html/{os}_table.html", "w") as fp:
             fp.write(table_template.render(context))
             logger.info(f"Wrote to {fp.name}")
             os_table_html_locations[os] = f"{os}_table.html"
 
     index_template = environment.get_template('index.html.j2')
-    with open("web/html/index.html", "w") as fp:
+    with open("html/index.html", "w") as fp:
         fp.write(index_template.render({"os_table_html_locations": os_table_html_locations}))
         logger.info(f"Wrote to {fp.name}")
 

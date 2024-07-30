@@ -29,7 +29,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.7
         with:
           branch: gh-pages # The branch the action should deploy to.
-          folder: web/html # The folder the action should deploy.
+          folder: html # The folder the action should deploy.
           git-config-name: github-actions[bot]
           git-config-email: github-actions[bot]@users.noreply.github.com
       - uses: stefanzweifel/git-auto-commit-action@v4

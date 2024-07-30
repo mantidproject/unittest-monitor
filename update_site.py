@@ -45,12 +45,19 @@ def get_test_results(db_path: str):
 def format_templates(test_results: Dict[str, List[ResultInfo]]):
     environment = Environment(loader=FileSystemLoader('web/templates/'))
     table_template = environment.get_template('os_table.html.j2')
-    for os in {'Linux', 'Windows', 'MacOS'}:
+    os_table_html_locations = {}
+    for os in ['Linux', 'Windows', 'MacOS']:
         context_data = create_context_data(test_results, os)
         context = {"os_name": os, **context_data}
         with open(f"web/html/{os}_table.html", "w") as fp:
             fp.write(table_template.render(context))
             logger.info(f"Wrote to {fp.name}")
+            os_table_html_locations[os] = f"{os}_table.html"
+
+    index_template = environment.get_template('index.html.j2')
+    with open("web/html/index.html", "w") as fp:
+        fp.write(index_template.render({"os_table_html_locations": os_table_html_locations}))
+        logger.info(f"Wrote to {fp.name}")
 
 
 def create_context_data(test_results: Dict[str, List[ResultInfo]], os: str):

@@ -60,3 +60,14 @@ class DatabaseHandler:
         cur = self.connection.cursor()
         result = cur.execute(f"SELECT job_id FROM JOB WHERE job_name = '{job_name}'")
         return int(result.fetchone()[0])
+
+    def get_all_test_results(self):
+        query = f"""
+        SELECT JOB.job_name, TEST_RESULT.build_number, TEST_RESULT.name, TEST_RESULT.os, TEST_RESULT.result, RUN.finish_time FROM TEST_RESULT
+        INNER JOIN JOB ON JOB.job_id = TEST_RESULT.job_id
+        INNER JOIN RUN ON ((RUN.job_id = TEST_RESULT.job_id) AND (RUN.build_number = TEST_RESULT.build_number) AND (RUN.os = TEST_RESULT.os))
+        WHERE JOB.job_name IN (SELECT job_name FROM JOB)
+        """
+        cur = self.connection.cursor()
+        result = cur.execute(query)
+        return result.fetchall()

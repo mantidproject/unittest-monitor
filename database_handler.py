@@ -36,16 +36,18 @@ class DatabaseHandler:
         failed_or_flaked_results = {test_name: test_result for test_name, test_result in run_result.test_results.items()
                                     if test_result.get_result_text() != "Passed"}
         logger.info(f"{len(failed_or_flaked_results)} failures or flakes found.")
-        cur = self.connection.cursor()
-        for test_name, test_result in failed_or_flaked_results.items():
-            result_text = test_result.get_result_text()
-            query = f"""
-            INSERT INTO TEST_RESULT (name, job_id, build_number, os, result)
-            VALUES ('{test_name}', {job_id}, '{run_result.build_number}', '{run_result.os}', '{result_text}')
-            """
-            cur.execute(query)
 
-        self.connection.commit()
+        if failed_or_flaked_results:
+            cur = self.connection.cursor()
+            for test_name, test_result in failed_or_flaked_results.items():
+                result_text = test_result.get_result_text()
+                query = f"""
+                INSERT INTO TEST_RESULT (name, job_id, build_number, os, result)
+                VALUES ('{test_name}', {job_id}, '{run_result.build_number}', '{run_result.os}', '{result_text}')
+                """
+                cur.execute(query)
+            
+            self.connection.commit()
 
     def _add_run(self, run_result: RunResult, job_id: int):
         query = f"""

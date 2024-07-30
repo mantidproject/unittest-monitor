@@ -42,7 +42,7 @@ def get_test_results(db_path: str):
     return results_per_test
 
 
-def format_templates(test_results):
+def format_templates(test_results: Dict[str, List[ResultInfo]]):
     environment = Environment(loader=FileSystemLoader('web/templates/'))
     table_template = environment.get_template('os_table.html.j2')
     for os in {'Linux', 'Windows', 'MacOS'}:
@@ -60,7 +60,7 @@ def create_table_rows(test_results: Dict[str, List[ResultInfo]], os: str):
         if filtered_results:
             filtered_results.sort(key=lambda result: int(result.finish_time))
             rows.append([test_name, len(filtered_results),
-                         datetime.fromtimestamp(int(filtered_results[-1].finish_time) / 1000).strftime("%y-%m-%d")])
+                         datetime.fromtimestamp(int(filtered_results[-1].finish_time) / 1000).strftime("%Y-%m-%d")])
     return rows
 
 

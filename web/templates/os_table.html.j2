@@ -13,19 +13,18 @@
   <script src="../templates/src/bootstrap.min.js"></script>
 
    <!-- DataTable Java Script Helper-->
-<!--  <script>
-    function failed_build_card(d) {
-      var past_failed_outcome = d.past_failed_outcome;
+  <script>
+    function failed_build_card(test_name) {
+      var result_strings = {{ test_names_to_result_strings }}[test_name];
       var failed_builds_code = '';
-      var object_keys = Object.keys(past_failed_outcome).sort();
-        for (let i = 0; i < object_keys.length; i++) {
-          failed_builds_code += `<b>${object_keys[i]}</b> : ${past_failed_outcome[object_keys[i]]}`+ '<br>';
-        };
+      for (let i = 0; i < result_strings.length; i++) {
+        failed_builds_code += result_strings[i] + '<br>';
+      };
       var failed_builds_card_code =
       '<table cellpadding="5" cellspacing="0" border="0" style="width:100%">' +
                           '<div class="card bg-dark text-white" style="width:100%;">' +
                               '<div class="card-header">' +
-                                  'Failed Builds (<b>pipelineName_Build</b> : result)' +
+                                  'Failed Builds (<b>pipelineName Build</b> : result)' +
                             ' </div>' +
                               '<div class="card-body bg-secondary">'+
                                   failed_builds_code +
@@ -35,8 +34,7 @@
                           ;
       return failed_builds_card_code;
     };
-  </script>-->
-  <!-- DataTable Java Script Helper (end)-->
+  </script>
 
   <title>{{ os_name }} Combined Results</title>
 </head>
@@ -50,11 +48,30 @@
         $(document).ready( function () {
           var table = $('#table-combined-{{ os_name }}').DataTable({
             columns: [
+              {
+                  className: 'dt-control',
+                  orderable: false,
+                  defaultContent: '',
+              },
               { title: "Test Name" },
               { title: "Count"},
               { title: "Last Failed Date" },
             ],
             data: {{ rows_data }}
+          });
+          $('#table-combined-{{ os_name }} tbody').on('click', 'td.dt-control', function () {
+              var tr = $(this).closest('tr');
+              var row = table.row(tr);
+
+              if (row.child.isShown()) {
+                  // This row is already open - close it
+                  row.child.hide();
+                  tr.removeClass('shown');
+              } else {
+                  // Open this row
+                  row.child(failed_build_card(row.data()[1])).show(); // the function to call when rendering the fail test card
+                  tr.addClass('shown');
+              }
           });
         });
     </script>

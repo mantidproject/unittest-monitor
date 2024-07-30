@@ -46,22 +46,25 @@ def format_templates(test_results: Dict[str, List[ResultInfo]]):
     environment = Environment(loader=FileSystemLoader('web/templates/'))
     table_template = environment.get_template('os_table.html.j2')
     for os in {'Linux', 'Windows', 'MacOS'}:
-        rows = create_table_rows(test_results, os)
-        context = {"os_name": os, "rows_data": rows}
+        context_data = create_context_data(test_results, os)
+        context = {"os_name": os, **context_data}
         with open(f"web/html/{os}_table.html", "w") as fp:
             fp.write(table_template.render(context))
             logger.info(f"Wrote to {fp.name}")
 
 
-def create_table_rows(test_results: Dict[str, List[ResultInfo]], os: str):
+def create_context_data(test_results: Dict[str, List[ResultInfo]], os: str):
     rows = []
+    test_name_to_failed_test_strings = {}
     for test_name, results in test_results.items():
         filtered_results = [result for result in results if result.os == os]
         if filtered_results:
-            filtered_results.sort(key=lambda result: int(result.finish_time))
-            rows.append([test_name, len(filtered_results),
-                         datetime.fromtimestamp(int(filtered_results[-1].finish_time) / 1000).strftime("%Y-%m-%d")])
-    return rows
+            filtered_results.sort(key=lambda result: int(result.finish_time), reverse=True)
+            rows.append(['', test_name, len(filtered_results),
+                         datetime.fromtimestamp(int(filtered_results[0].finish_time) / 1000).strftime("%Y-%m-%d")])
+            test_name_to_failed_test_strings[test_name] = [f"{result.job_name} {result.build_number} : {result.result}"
+                                                           for result in filtered_results]
+    return {"rows_data": rows, "test_names_to_result_strings": test_name_to_failed_test_strings}
 
 
 def parse_args():

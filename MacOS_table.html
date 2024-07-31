@@ -14,7 +14,7 @@
    <!-- DataTable Java Script Helper-->
   <script>
     function failed_build_card(test_name) {
-      var result_strings = {'DataHandlingTest_LoadNexusProcessedTest': ['main_nightly_deployment 815 : Flake']}[test_name];
+      var result_strings = {'DataHandlingTest_LoadNexusProcessedTest': ['main_nightly_deployment 815 : <b>Flake</b> (2024-06-13)']}[test_name];
       var failed_builds_code = '';
       for (let i = 0; i < result_strings.length; i++) {
         failed_builds_code += result_strings[i] + '<br>';
@@ -23,7 +23,7 @@
       '<table cellpadding="5" cellspacing="0" border="0" style="width:100%">' +
                           '<div class="card bg-dark text-white" style="width:100%;">' +
                               '<div class="card-header">' +
-                                  'Failed Builds (<b>pipelineName Build</b> : result)' +
+                                  'Failed Builds (pipelineName Build : <b>result</b> (date))' +
                             ' </div>' +
                               '<div class="card-body bg-secondary">'+
                                   failed_builds_code +
@@ -40,7 +40,7 @@
 
 <body>
   <div class="container px-2 mt-5">
-    <h1 class="display-3 fw-bold text-center">MacOS Combined Result</h1>
+    <h1 class="display-3 fw-bold text-center">Failing / Flaking unittests - MacOS</h1>
     <div class="col-lg-12 mx-auto">
       <table id="table-combined-MacOS" class="table table-striped table-bordered" style="width:100%"></table>
       <script>

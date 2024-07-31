@@ -54,8 +54,9 @@ def job_builds_to_be_parsed(job_name: str, jenkins_url: str, db_handler: Databas
         # jeknins gives the unix epoch in milliseconds, so divide by 1000
         logger.info(f"Found most recent build {build_number} at {datetime.fromtimestamp(int(finish_time) / 1000)}")
         latest_builds = jenkins_handler.get_all_builds_after_timestamp(job_name, int(finish_time))
-    latest_builds.sort(key=lambda build_no_and_ft: build_no_and_ft[1])
-    db_handler.save_latest_build(job_name, *latest_builds[-1])
+    if latest_builds:
+        latest_builds.sort(key=lambda build_no_and_ft: build_no_and_ft[1])
+        db_handler.save_latest_build(job_name, *latest_builds[-1])
     return latest_builds
 
 

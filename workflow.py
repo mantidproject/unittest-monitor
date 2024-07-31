@@ -44,14 +44,19 @@ def job_builds_to_be_parsed(job_name: str, jenkins_url: str, db_handler: Databas
     :param db_handler: handle one the test results' database
     :return: List of tuples of runs and finish times that have taken place since the last data ingest
     """
+    latest_builds: List[Tuple[str, str]] = []
     jenkins_handler = JenkinsHandler(jenkins_url)
     build_number, finish_time = db_handler.get_latest_build(job_name)
     if finish_time is None:
-        logger.info("No previous builds found in the database")
-        return jenkins_handler.get_all_builds_after_timestamp(job_name, 0)
-    # jeknins gives the unix epoch in milliseconds, so divide by 1000
-    logger.info(f"Found most recent build {build_number} at {datetime.fromtimestamp(int(finish_time) / 1000)}")
-    return jenkins_handler.get_all_builds_after_timestamp(job_name, int(finish_time))
+        logger.info("No previous latest build recorded")
+        latest_builds = jenkins_handler.get_all_builds_after_timestamp(job_name, 0)
+    else:
+        # jeknins gives the unix epoch in milliseconds, so divide by 1000
+        logger.info(f"Found most recent build {build_number} at {datetime.fromtimestamp(int(finish_time) / 1000)}")
+        latest_builds = jenkins_handler.get_all_builds_after_timestamp(job_name, int(finish_time))
+    latest_builds.sort(key=lambda build_no_and_ft: build_no_and_ft[1])
+    db_handler.save_latest_build(job_name, *latest_builds[-1])
+    return latest_builds
 
 
 def retrieve_log_files(job_name: str, build_number: str) -> Dict[str, str]:

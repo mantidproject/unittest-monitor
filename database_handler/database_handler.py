@@ -18,9 +18,8 @@ class DatabaseHandler:
         for the given job name
         """
         query = f"""
-        SELECT build_number, finish_time FROM RUN 
-        INNER JOIN JOB ON RUN.job_id = JOB.job_id WHERE JOB.job_name = '{job_name}' 
-        ORDER BY finish_time DESC Limit 1
+        SELECT build_number, finish_time FROM LATEST_RUN 
+        INNER JOIN JOB ON LATEST_RUN.job_id = JOB.job_id WHERE JOB.job_name = '{job_name}' 
         """
         cur = self.connection.cursor()
         result = cur.execute(query)
@@ -28,6 +27,16 @@ class DatabaseHandler:
         if row is None:
             return None, None
         return row
+
+    def save_latest_build(self, job_name: str, build_number: str, finish_time: str):
+        job_id = self._get_job_id(job_name)
+        insert_query = f"""
+        INSERT INTO LATEST_RUN (job_id, build_number, finish_time)
+        VALUES ('{job_id}', '{build_number}', '{finish_time}')
+        """
+        cur = self.connection.cursor()
+        cur.execute(insert_query)
+        self.connection.commit()
 
     def ingest_results(self, run_result: RunResult):
         failed_or_flaked_results = {test_name: test_result for test_name, test_result in run_result.test_results.items()

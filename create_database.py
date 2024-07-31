@@ -13,6 +13,15 @@ CREATE TABLE JOB (
     PRIMARY KEY(job_id)
 );
 """
+LATEST_RUN_TABLE_CREATE_COMMAND = """
+CREATE TABLE LATEST_RUN (
+    job_id INTEGER NOT NULL UNIQUE ON CONFLICT REPLACE,
+    build_number INTEGER NOT NULL,
+    finish_time INTEGER NOT NULL,zs
+    PRIMARY KEY(job_id, build_number),
+    FOREIGN KEY(job_id) REFERENCES JOB(job_id)
+);
+"""
 RUN_TABLE_CREATE_COMMAND = """
 CREATE TABLE RUN (
     job_id INTEGER NOT NULL,
@@ -57,6 +66,7 @@ def init_database(db_name: str, job_names: List[str]):
     with sqlite3.connect(db_name) as conn:
         cur = conn.cursor()
         cur.execute(JOBS_TABLE_CREATE_COMMAND)
+        cur.execute(LATEST_RUN_TABLE_CREATE_COMMAND)
         cur.execute(RUN_TABLE_CREATE_COMMAND)
         cur.execute(TEST_RESULT_TABLE_CREATE_COMMAND)
         for job in job_names:

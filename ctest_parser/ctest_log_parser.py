@@ -2,7 +2,7 @@ import logging
 import re
 from typing import Dict
 
-from ctest_result import TestRun, TestResult
+from ctest_parser.ctest_result import TestRun, TestResult
 
 logger = logging.getLogger("CtestOutputParser")
 

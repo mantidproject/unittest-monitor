@@ -7,10 +7,10 @@ from typing import List, Dict, Tuple
 import urllib.request
 import urllib.error
 
-from database_handler import DatabaseHandler
-from jenkins_handler import JenkinsHandler
+from database_handler.database_handler import DatabaseHandler
+from jenkins_handler.jenkins_handler import JenkinsHandler
 from run_result import RunResult
-from ctest_log_parser import CtestOutputParser
+from ctest_parser.ctest_log_parser import CtestOutputParser
 
 
 os_names_to_log_names = {'Windows': 'ctest_msys.log',

@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 import shutil
 
-from database_handler import DatabaseHandler
+from database_handler.database_handler import DatabaseHandler
 logger = logging.getLogger("update site")
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 

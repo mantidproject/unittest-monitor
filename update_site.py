@@ -78,7 +78,7 @@ def create_context_data(test_results: Dict[str, List[ResultInfo]], os: str):
             rows.append(['', test_name, len(filtered_results),
                          datetime.fromtimestamp(int(filtered_results[0].finish_time) / 1000).strftime("%Y-%m-%d")])
             test_name_to_failed_test_strings[test_name] = [f"{result.job_name} {result.build_number} : <b>{result.result}</b> "
-                                                           f"({datetime.fromtimestamp(int(filtered_results[0].finish_time) / 1000).strftime('%Y-%m-%d')})"
+                                                           f"({datetime.fromtimestamp(int(result.finish_time) / 1000).strftime('%Y-%m-%d')})"
                                                            for result in filtered_results]
     return {"rows_data": rows, "test_names_to_result_strings": test_name_to_failed_test_strings}
 

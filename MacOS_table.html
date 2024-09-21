@@ -14,7 +14,7 @@
    <!-- DataTable Java Script Helper-->
   <script>
     function failed_build_card(test_name) {
-      var result_strings = {'DataHandlingTest_LoadNexusProcessedTest': ['main_nightly_deployment 815 : <b>Flake</b> (2024-06-13)'], 'AlgorithmsTest_GetDetectorOffsetsTest': ['main_nightly_deployment 860 : <b>Failed</b> (2024-08-19)'], 'CrystalTest_IndexPeaksTest': ['main_nightly_deployment 860 : <b>Failed</b> (2024-08-19)'], 'python.WorkflowAlgorithms.SANSStitchTest.SANSStitchTest': ['main_nightly_deployment 860 : <b>Failed</b> (2024-08-19)'], 'AlgorithmsTest_CombineDiffCalTest': ['main_nightly_deployment 884 : <b>Flake</b> (2024-09-18)']}[test_name];
+      var result_strings = {'DataHandlingTest_LoadNexusProcessedTest': ['main_nightly_deployment 815 : <b>Flake</b> (2024-06-13)'], 'AlgorithmsTest_GetDetectorOffsetsTest': ['main_nightly_deployment 860 : <b>Failed</b> (2024-08-19)'], 'CrystalTest_IndexPeaksTest': ['main_nightly_deployment 860 : <b>Failed</b> (2024-08-19)'], 'python.WorkflowAlgorithms.SANSStitchTest.SANSStitchTest': ['main_nightly_deployment 860 : <b>Failed</b> (2024-08-19)'], 'AlgorithmsTest_CombineDiffCalTest': ['main_nightly_deployment 886 : <b>Flake</b> (2024-09-20)', 'main_nightly_deployment 884 : <b>Flake</b> (2024-09-18)']}[test_name];
       var failed_builds_code = '';
       for (let i = 0; i < result_strings.length; i++) {
         failed_builds_code += result_strings[i] + '<br>';
@@ -56,7 +56,7 @@
               { title: "Count"},
               { title: "Last Failed Date" },
             ],
-            data: [['', 'DataHandlingTest_LoadNexusProcessedTest', 1, '2024-06-13'], ['', 'AlgorithmsTest_GetDetectorOffsetsTest', 1, '2024-08-19'], ['', 'CrystalTest_IndexPeaksTest', 1, '2024-08-19'], ['', 'python.WorkflowAlgorithms.SANSStitchTest.SANSStitchTest', 1, '2024-08-19'], ['', 'AlgorithmsTest_CombineDiffCalTest', 1, '2024-09-18']]
+            data: [['', 'DataHandlingTest_LoadNexusProcessedTest', 1, '2024-06-13'], ['', 'AlgorithmsTest_GetDetectorOffsetsTest', 1, '2024-08-19'], ['', 'CrystalTest_IndexPeaksTest', 1, '2024-08-19'], ['', 'python.WorkflowAlgorithms.SANSStitchTest.SANSStitchTest', 1, '2024-08-19'], ['', 'AlgorithmsTest_CombineDiffCalTest', 2, '2024-09-20']]
           });
           $('#table-combined-MacOS tbody').on('click', 'td.dt-control', function () {
               var tr = $(this).closest('tr');

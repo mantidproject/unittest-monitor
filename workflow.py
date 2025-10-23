@@ -15,7 +15,7 @@ from ctest_parser.ctest_log_parser import CtestOutputParser
 
 os_names_to_log_names = {'Windows': 'ctest_msys.log',
                          'Linux': 'ctest_linux-gnu.log',
-                         'MacOS': 'ctest_darwin22.log'}
+                         'MacOS': 'ctest_darwin24.log'}
 logger = logging.getLogger("workflow")
 logging.basicConfig(level=logging.INFO, stream=sys.stdout)
 

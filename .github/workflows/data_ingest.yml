@@ -40,4 +40,6 @@ jobs:
           commit_message: Update database
           create_branch: true
           file_pattern: 'testResults.db'
-        
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+          commit_author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
